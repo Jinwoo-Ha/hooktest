@@ -2,8 +2,8 @@
 
 echo "🔍 Push 전 파일 검사를 시작합니다..."
 
-# 삭제된 파일 확인
-deleted_files=$(git diff --cached --name-only --diff-filter=D)
+# 원격 브랜치와 비교하여 삭제된 파일 확인
+deleted_files=$(git diff origin/main...HEAD --diff-filter=D --name-only)
 
 if [ ! -z "$deleted_files" ]; then
     echo "⚠️ 경고: 다음 파일들이 삭제될 예정입니다:"
