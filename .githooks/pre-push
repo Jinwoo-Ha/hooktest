@@ -2,23 +2,30 @@
 
 echo "🔍 Push 전 파일 검사를 시작합니다..."
 
-# 원격 브랜치와 비교하여 삭제된 파일 확인
+# 삭제된 파일 확인
 deleted_files=$(git diff origin/main...HEAD --diff-filter=D --name-only)
 
+# 삭제된 파일이 있는 경우
 if [ ! -z "$deleted_files" ]; then
     echo ""
     echo "⚠️ 경고: 다음 파일들이 삭제될 예정입니다:"
     echo "$deleted_files"
     echo ""
-    echo "정말로 이 파일들을 삭제하시겠습니까?"
+    echo "삭제를 진행하려면 'yes'를 입력하세요."
+    
+    # 사용자 입력 받기
+    read -p "입력: " answer
+    
+    # 입력값이 'yes'가 아닌 경우 push 취소
+    if [ "$answer" != "yes" ]; then
+        echo ""
+        echo "❌ Push가 취소되었습니다."
+        exit 1
+    fi
+    
     echo ""
-    
-    # Windows에서 더 잘 작동하는 방식
-    echo "계속하려면 아무 키나 누르세요... (취소하려면 Ctrl+C)"
-    read -n 1 -s dummy
-    
-    echo "✅ 계속 진행합니다."
+    echo "✅ 삭제를 진행합니다."
 fi
 
-echo "✅ 파일 검사가 완료되었습니다."
+echo "✅ Push를 진행합니다."
 exit 0
