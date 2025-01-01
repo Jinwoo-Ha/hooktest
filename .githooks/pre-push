@@ -11,17 +11,13 @@ if [ ! -z "$deleted_files" ]; then
     echo "$deleted_files"
     echo ""
     echo "정말로 이 파일들을 삭제하시겠습니까?"
-    echo "아래에 'yes'를 입력하고 Enter를 누르세요."
-    echo "(취소하려면 다른 키를 입력하세요)"
     echo ""
-    printf "입력: "
-    read response
     
-    if [ "$response" != "yes" ]; then
-        echo ""
-        echo "❌ Push가 취소되었습니다."
-        exit 1
-    fi
+    # Windows에서 더 잘 작동하는 방식
+    echo "계속하려면 아무 키나 누르세요... (취소하려면 Ctrl+C)"
+    read -n 1 -s dummy
+    
+    echo "✅ 계속 진행합니다."
 fi
 
 echo "✅ 파일 검사가 완료되었습니다."
