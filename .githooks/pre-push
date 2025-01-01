@@ -11,22 +11,20 @@ if [ ! -z "$deleted_files" ]; then
     echo "⚠️ 경고: 다음 파일들이 삭제될 예정입니다:"
     echo "$deleted_files"
     echo ""
-    echo "삭제를 진행하려면 'yes'를 입력하세요."
-    echo "입력을 기다리는 중..."
+    echo "삭제를 진행하려면 'yes'를 입력하고 Enter를 누르세요."
     
-    # 사용자 입력을 받을 때까지 대기
-    while true; do
-        read -r answer
-        if [ "$answer" = "yes" ]; then
-            echo ""
-            echo "✅ 삭제를 진행합니다."
-            break
-        elif [ ! -z "$answer" ]; then
-            echo ""
-            echo "❌ Push가 취소되었습니다."
-            exit 1
-        fi
-    done
+    # Windows와 VSCode에서 더 안정적으로 작동하는 방식
+    printf "입력: "
+    read -r answer </dev/tty
+    
+    if [ "$answer" != "yes" ]; then
+        echo ""
+        echo "❌ Push가 취소되었습니다."
+        exit 1
+    fi
+    
+    echo ""
+    echo "✅ 삭제를 진행합니다."
 fi
 
 echo "✅ Push를 진행합니다."
